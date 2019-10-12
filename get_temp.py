@@ -19,7 +19,7 @@ def get_curr_jobs(user='harmang'):
 
     # Call squeue and parse result
     init_result = subprocess.run(squeue_cmd, stdout=subprocess.PIPE).stdout.decode('utf-8')
-    init_result = result.split('\n')[1:]
+    init_result = init_result.split('\n')[1:]
     
     # Split jobs and remove empyt chars
     content = [list(filter(None, x.split(' '))) for x in result]
@@ -69,13 +69,10 @@ def send_email(msg, receiver_email='gharman07@gmail.com'):
     receiver_email = "gharman07@gmail.com"  # Enter receiver address
     password = 'slurm_done_100'
     
-    
-    
     message = """\
     Subject: Hi there
     
     This message is sent from Python."""
-    
     
     context = ssl.create_default_context()
     with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
@@ -83,7 +80,6 @@ def send_email(msg, receiver_email='gharman07@gmail.com'):
         server.sendmail(sender_email, receiver_email, msg)
 
 ################################################################################
-
 
 
 jobIds = get_curr_jobs()
