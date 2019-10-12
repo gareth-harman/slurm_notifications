@@ -42,17 +42,17 @@ def get_max_ram(jobid, val = 'gb'):
     ram_cmd = ['sstat', '-job', str(jobid), '--format=MaxRSS']
     
     # Call to grab maxram of a job
-	maxRAM = subprocess.run(ram_cmd, stdout=subprocess.PIPE).stdout.decode('utf-8')
-	maxRAM = list(filter(None, maxRAM.split('\n')[2:]))[0]
+    maxRAM = subprocess.run(ram_cmd, stdout=subprocess.PIPE).stdout.decode('utf-8')
+    maxRAM = list(filter(None, maxRAM.split('\n')[2:]))[0]
     
     # Parse a bit
 	maxRAM_flt = float(maxRAM.split('K')[0])
 	
 	# Return correct format
-	if val == 'mb':
-	    return round(maxRAM_flt/1024, 4)
-	else:
-	    return round(maxRAM_flt/1024, 4)
+    if val == 'mb':
+        return round(maxRAM_flt/1024, 4)
+    else:
+        return round(maxRAM_flt/1024, 4)
 	    
 ################################################################################
 
