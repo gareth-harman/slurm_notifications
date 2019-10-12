@@ -46,7 +46,7 @@ def get_max_ram(jobid, val = 'gb'):
     maxRAM = list(filter(None, maxRAM.split('\n')[2:]))[0]
     
     # Parse a bit
-	maxRAM_flt = float(maxRAM.split('K')[0])
+    maxRAM_flt = float(maxRAM.split('K')[0])
 	
 	# Return correct format
     if val == 'mb':
@@ -90,6 +90,6 @@ jobIds = get_curr_jobs()
 
 for ii in jobIds:
 
-	jobRAM = get_max_ram(ii)
-	
-	print('JobID: {} Max RAM {}'.format(ii, jobRAM))
+    jobRAM = get_max_ram(ii)
+    
+    print('JobID: {} Max RAM {}'.format(ii, jobRAM))
