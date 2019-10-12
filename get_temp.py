@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import subprocess
+import smtplib, ssl
 
 # 1 JobId
 # 2 Running
@@ -56,16 +57,39 @@ def get_max_ram(jobid, val = 'gb'):
 ################################################################################
 
 
+################################################################################
+# Function to send email
+################################################################################
+
+def send_email(msg, receiver_email='gharman07@gmail.com'):
+    
+    port = 465  # For SSL
+    smtp_server = "smtp.gmail.com"
+    sender_email = "slurm.completed@gmail.com"  # Enter your address
+    receiver_email = "gharman07@gmail.com"  # Enter receiver address
+    password = 'slurm_done_100'
+    
+    
+    
+    message = """\
+    Subject: Hi there
+    
+    This message is sent from Python."""
+    
+    
+    context = ssl.create_default_context()
+    with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+        server.login(sender_email, password)
+        server.sendmail(sender_email, receiver_email, msg)
+
+################################################################################
+
+
+
 jobIds = get_curr_jobs()
 
 for ii in jobIds:
 
-	maxRAM = subprocess.run(['sstat', '-job', str(ii), '--format=MaxRSS'], stdout=subprocess.PIPE).stdout.decode('utf-8')
-	maxRAM = list(filter(None, maxRAM.split('\n')[2:]))[0]
-	#maxRAM = list(filter(None, maxRAM.split(' ')))
-
-	maxRAM_flt = float(maxRAM.split('K')[0])
-	maxRAM_mb = maxRAM_flt/1024
-	maxRAM_gb = maxRAM_mb/1024
-
-	print('JobID: {} Max RAM {}'.format(ii, round(maxRAM_gb, 4)))
+	jobRAM = get_max_ram(ii)
+	
+	print('JobID: {} Max RAM {}'.format(ii, jobRAM))
