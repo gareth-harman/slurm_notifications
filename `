@@ -1,0 +1,27 @@
+#!/usr/bin/python3
+
+import subprocess
+
+# 1 JobId
+# 2 Running
+# 3 JobName
+# 4 User
+
+
+
+result = subprocess.run(['squeue', '-u', 'harmang'], stdout=subprocess.PIPE).stdout.decode('utf-8')
+result = result.split('\n')[1:]
+
+content = [list(filter(None, x.split(' '))) for x in result]
+content = list(filter(None, content))
+
+jobIds = [x[0] for x in content]
+
+for ii in jobIds:
+
+	maxRAM = subprocess.run(['sstat', '-job', str(ii), '--format=MaxRSS'], stdout=subprocess.PIPE).stdout.decode('utf-8')
+	maxRAM = maxRAM.split('\n')[2:]
+    #maxRAM = subprocess.run(['sstat', '-jobid', str(ii), '--format="MaxRSS"'], stdout=subprocess.PIPE).stdout.decode('utf-8')
+    #maxRAM = maxRAM.split('\n')[2:]
+
+	print('JobID: {} Max RAM {}'.format(ii, maxRAM))
