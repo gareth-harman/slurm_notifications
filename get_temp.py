@@ -18,8 +18,8 @@ def get_curr_jobs(user='harmang'):
     squeue_cmd = ['squeue', '-u', user]
 
     # Call squeue and parse result
-    init_result = subprocess.run(squeue_cmd, stdout=subprocess.PIPE).stdout.decode('utf-8')
-    init_result = init_result.split('\n')[1:]
+    result = subprocess.run(squeue_cmd, stdout=subprocess.PIPE).stdout.decode('utf-8')
+    result = result.split('\n')[1:]
     
     # Split jobs and remove empyt chars
     content = [list(filter(None, x.split(' '))) for x in result]
