@@ -52,6 +52,7 @@ def get_max_ram(jobid, val = 'gb'):
     if val == 'mb':
         return round(maxRAM_flt/1024, 4)
     else:
+        maxRAM_flt = maxRAM_flt/1024
         return round(maxRAM_flt/1024, 4)
 	    
 ################################################################################
